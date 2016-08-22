@@ -31,7 +31,7 @@ class Map
                         $map[$key]++;
                     }
                     // 右上
-                    if ($map[$key - ($row + 1)] === 'M') {
+                    if ($map[$key - ($row - 1)] === 'M') {
                         $map[$key]++;
                     }
                 }
@@ -47,7 +47,7 @@ class Map
                         $map[$key]++;
                     }
                     // 左上
-                    if ($map[$key - ($row - 1)] === 'M') {
+                    if ($map[$key - ($row + 1)] === 'M') {
                         $map[$key]++;
                     }
                 }
