@@ -20,28 +20,35 @@ class Map
 
         foreach ($map as $key=>$value) {
             if ($value === 0) {
-                if ($map[$key + 1] === 'M' && (($key % $row) != 0)) {
-                    $map[$key]++;
+
+                if (($key % $row) != 0) {
+                    if ($map[$key + 1] === 'M') {
+                        $map[$key]++;
+                    }
+                    if ($map[$key + $row +1] === 'M') {
+                        $map[$key]++;
+                    }
+                    if ($map[$key - $row +1] === 'M') {
+                        $map[$key]++;
+                    }
                 }
-                if ($map[$key - 1] === 'M' && (($key % $row) != 1)) {
-                    $map[$key]++;
+
+                if (($key % $row) != 1) {
+                    if ($map[$key - 1] === 'M') {
+                        $map[$key]++;
+                    }
+                    if ($map[$key + $row -1] === 'M') {
+                        $map[$key]++;
+                    }
+                    if ($map[$key - $row -1] === 'M') {
+                        $map[$key]++;
+                    }
                 }
+
                 if ($map[$key + $row] === 'M') {
                     $map[$key]++;
                 }
                 if ($map[$key - $row] === 'M') {
-                    $map[$key]++;
-                }
-                if ($map[$key + $row -1] === 'M' && (($key % $row) != 1)) {
-                    $map[$key]++;
-                }
-                if ($map[$key + $row +1] === 'M' && (($key % $row) != 0)) {
-                    $map[$key]++;
-                }
-                if ($map[$key - $row -1] === 'M' && (($key % $row) != 1)) {
-                    $map[$key]++;
-                }
-                if ($map[$key - $row +1] === 'M' && (($key % $row) != 0)) {
                     $map[$key]++;
                 }
             }
