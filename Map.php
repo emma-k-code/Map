@@ -7,15 +7,13 @@ class Map
         $total = $row * $column;
 
         for ($i = 1; $i <= $total; $i++) {
-            $map[$i] = 0 ;
+            $map[$i] = 0;
         }
 
         $rand = array_rand($map, $m);
 
-        foreach ($map as $key=>$value) {
-            if (in_array($key, $rand)) {
-                $map[$key] = 'M';
-            }
+        foreach ($rand as $value) {
+            $map[$value] = 'M';
         }
 
         foreach ($map as $key=>$value) {
