@@ -4,10 +4,9 @@ header("content-type: text/html; charset=utf-8");
 
 $row = 10;
 $column = 10;
-$mCorrect = 40;
-$nCorrect = ($row - 1);
-$total = $row * $column;
-$mapLength = $total + ($row - 1); // 字串的正確長度
+$mCorrect = 40; // M的正確數量
+$nCorrect = ($row - 1); // N的正確數量
+$mapLength = $row * $column + $nCorrect; // 字串的正確長度
 
 $map = $_GET['map'];
 $length = strlen($map);
@@ -91,6 +90,7 @@ if (isset($errorRow)) {
     return;
 }
 
+// 檢查數字是否正確
 foreach ($checkMap as $key=>$value) {
     for ($i = 0; $i < $row; $i++) {
         if (substr($value, $i, 1) !== 'M') {
@@ -155,6 +155,5 @@ if (isset($errorM)) {
     return;
 }
 
-
+// 如果上述檢查都通過
 echo '符合';
-
