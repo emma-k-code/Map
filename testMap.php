@@ -11,32 +11,37 @@ $mapLength = $row * $column + $nCorrect; // 字串的正確長度
 $map = $_GET['map'];
 $length = strlen($map);
 
+
 // 檢查大小寫與其他英文字
 if (!preg_match( '/^([0-8MN]+)$/', $map)) {
-    if (preg_match( '/^([0-8mnMN]+)$/', $map)) {
-        echo  '不符合，因為輸入的字串大小寫錯誤。';
+    if (preg_match( '/^([0-8mN]+)$/', $map)) {
+        $error .= '格式錯誤，M大小寫錯誤\n';
+    } elseif (preg_match( '/^([0-8Mn]+)$/', $map)) {
+        $error .= '格式錯誤，N大小寫錯誤\n';
+    } elseif (preg_match( '/^([0-8mnMN]+)$/', $map)) {
+        $error .= '格式錯誤，大小寫錯誤\n';
     } elseif (preg_match( '/^([0-8a-zA-Z]+)$/', $map)) {
-        echo  '不符合，因為輸入的字串含有MN以外的英文字。';
+        $error .= '格式錯誤，含有MN以外的英文字\n';
     } elseif (preg_match( '/^([0-9]+)$/', $map)) {
-        echo  '不符合，因為輸入的字串僅有數字。';
+        $error .= '格式錯誤，輸入的字串僅有數字\n';
     } elseif (preg_match( '/^([0-9a-zA-Z]+)$/', $map)) {
-        echo  '不符合，因為輸入的字串有大於8的數字。';
+        $error .= '格式錯誤，輸入的字串含有有數字9\n';
     } else {
-        echo  '不符合，因為輸入的字串含有其他非格式內的字元。';
+        $error .= '格式錯誤，輸入的字串含有其他非格式內的字元\n';
     }
-    return;
 }
 
 // 如果字串長度不符合
 if ($length != $mapLength) {
     if ($length < $mapLength ) {
-        echo '不符合，因為輸入的字串長度為'. $length .'，少於'. $mapLength .'。';
+        $error .= '字串長度錯誤，輸入的字串長度為'. $length .'，少於'. $mapLength .'\n';
     }
     if ($length > $mapLength ) {
-        echo '不符合，因為輸入的字串長度為'. $length .'，大於'. $mapLength .'。';
+        $error .= '字串長度錯誤，輸入的字串長度為'. $length .'，大於'. $mapLength .'\n';
     }
-    return;
 }
+
+$map = strtoupper($map);
 
 // 檢查N的數量
 $n = 0;
@@ -48,12 +53,11 @@ for ($i = 0; $i < $length; $i++) {
 
 if ($n != $nCorrect) {
     if ($n < $nCorrect) {
-        echo '不符合，因為N的數量為'. $n .'，少於' . $nCorrect . '。';
+        $error .= '斷行數量錯誤，輸入的斷行數為'. $n .'，少於' . $nCorrect . '\n';
     }
     if ($n > $nCorrect) {
-        echo '不符合，因為N的數量為'. $n .'，大於' . $nCorrect . '。';
+        $error .= '斷行數量錯誤，輸入的斷行數為'. $n .'，大於' . $nCorrect . '\n';
     }
-    return;
 }
 
 // 檢查M的數量
@@ -66,12 +70,11 @@ for ($i = 0; $i < $length; $i++) {
 
 if ($m != $mCorrect) {
     if ($m < $mCorrect) {
-        echo '不符合，因為M的數量為'. $m .'，少於' . $mCorrect . '。';
+        $error .= '地雷數量錯誤，輸入的地雷數為'. $m .'，少於' . $mCorrect . '\n';
     }
     if ($m > $mCorrect) {
-        echo '不符合，因為M的數量為'. $m .'，大於' . $mCorrect . '。';
+        $error .= '地雷數量錯誤，輸入的地雷數為'. $m .'，大於' . $mCorrect . '\n';
     }
-    return;
 }
 
 $checkMap = explode('N', $map);
@@ -84,16 +87,17 @@ foreach ($checkMap as $key=>$value) {
 }
 
 if (isset($errorRow)) {
-    $errorRow = substr($errorRow, 0, (strlen($errorRow) - 1));
-    echo '不符合，因為第'. $errorRow .'排的長度不為' . $row . '。';
+    if ($errorRow < $row) {
+        $errorRow = substr($errorRow, 0, (strlen($errorRow) - 1));
+        $error .= '行的長度錯誤，第'. $errorRow .'行的長度不為' . $row . '。';
+    }
 
-    return;
 }
 
 // 檢查數字是否正確
 foreach ($checkMap as $key=>$value) {
     for ($i = 0; $i < $row; $i++) {
-        if (substr($value, $i, 1) !== 'M') {
+        if (preg_match( '/^([0-9]+)$/', substr($value, $i, 1))) {
             $checkAround = 0;
             // 判斷是否為最右側
             if ($i != 9) {
@@ -147,13 +151,16 @@ foreach ($checkMap as $key=>$value) {
 }
 
 if (isset($errorM)) {
-    echo '不符合，因為字串內的數字有誤';
+    $error .= '字串內的數字有誤';
     foreach ($errorM as $key=>$value) {
-        echo '，第' . $key . '個數字為' . $value[0] . '，正確應為' . $value[1];
+        $error .= '，第' . $key . '個數字為' . $value[0] . '，正確應為' . $value[1];
     }
-    echo '。';
-    return;
 }
 
 // 如果上述檢查都通過
-echo '符合';
+if (isset($error)) {
+    echo '不符合，因為下列原因\n';
+    echo $error;
+} else {
+    echo '符合';
+}
