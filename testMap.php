@@ -14,15 +14,15 @@ $length = strlen($map);
 // 檢查大小寫與其他英文字
 if (!preg_match( '/^([0-8MN]+)$/', $map)) {
     if (preg_match( '/^([0-8mnMN]+)$/', $map)) {
-        echo  '不符合，因為大小寫錯誤。';
+        echo  '不符合，因為輸入的字串大小寫錯誤。';
     } elseif (preg_match( '/^([0-8a-zA-Z]+)$/', $map)) {
-        echo  '不符合，因為含有MN以外的英文字。';
+        echo  '不符合，因為輸入的字串含有MN以外的英文字。';
     } elseif (preg_match( '/^([0-9]+)$/', $map)) {
-        echo  '不符合，因為僅有數字。';
+        echo  '不符合，因為輸入的字串僅有數字。';
     } elseif (preg_match( '/^([0-9a-zA-Z]+)$/', $map)) {
-        echo  '不符合，因為有大於8的數字。';
+        echo  '不符合，因為輸入的字串有大於8的數字。';
     } else {
-        echo  '不符合，因為格式錯誤。';
+        echo  '不符合，因為輸入的字串含有其他非格式內的字元。';
     }
     return;
 }
@@ -30,10 +30,10 @@ if (!preg_match( '/^([0-8MN]+)$/', $map)) {
 // 如果字串長度不符合
 if ($length != $mapLength) {
     if ($length < $mapLength ) {
-        echo '不符合，因為長度為'. $length .'，少於'. $mapLength .'。';
+        echo '不符合，因為輸入的字串長度為'. $length .'，少於'. $mapLength .'。';
     }
     if ($length > $mapLength ) {
-        echo '不符合，因為長度為'. $length .'，大於'. $mapLength .'。';
+        echo '不符合，因為輸入的字串長度為'. $length .'，大於'. $mapLength .'。';
     }
     return;
 }
