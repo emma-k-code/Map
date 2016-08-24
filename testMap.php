@@ -15,29 +15,29 @@ $length = strlen($map);
 // 檢查大小寫與其他英文字
 if (!preg_match( '/^([0-8MN]+)$/', $map)) {
     if (preg_match( '/^([0-8mN]+)$/', $map)) {
-        $error .= '格式錯誤，M大小寫錯誤\n';
+        $error .= '格式錯誤，M大小寫錯誤' . "\n";
     } elseif (preg_match( '/^([0-8Mn]+)$/', $map)) {
-        $error .= '格式錯誤，N大小寫錯誤\n';
+        $error .= '格式錯誤，N大小寫錯誤' . "\n";
     } elseif (preg_match( '/^([0-8mnMN]+)$/', $map)) {
-        $error .= '格式錯誤，大小寫錯誤\n';
+        $error .= '格式錯誤，大小寫錯誤' . "\n";
     } elseif (preg_match( '/^([0-8a-zA-Z]+)$/', $map)) {
-        $error .= '格式錯誤，含有MN以外的英文字\n';
+        $error .= '格式錯誤，含有MN以外的英文字' . "\n";
     } elseif (preg_match( '/^([0-9]+)$/', $map)) {
-        $error .= '格式錯誤，輸入的字串僅有數字\n';
+        $error .= '格式錯誤，輸入的字串僅有數字' . "\n";
     } elseif (preg_match( '/^([0-9a-zA-Z]+)$/', $map)) {
-        $error .= '格式錯誤，輸入的字串含有有數字9\n';
+        $error .= '格式錯誤，輸入的字串含有有數字9' . "\n";
     } else {
-        $error .= '格式錯誤，輸入的字串含有其他非格式內的字元\n';
+        $error .= '格式錯誤，輸入的字串含有其他非格式內的字元' . "\n";
     }
 }
 
 // 如果字串長度不符合
 if ($length != $mapLength) {
     if ($length < $mapLength ) {
-        $error .= '字串長度錯誤，輸入的字串長度為'. $length .'，少於'. $mapLength .'\n';
+        $error .= '字串長度錯誤，輸入的字串長度為'. $length .'，少於'. $mapLength . "\n";
     }
     if ($length > $mapLength ) {
-        $error .= '字串長度錯誤，輸入的字串長度為'. $length .'，大於'. $mapLength .'\n';
+        $error .= '字串長度錯誤，輸入的字串長度為'. $length .'，大於'. $mapLength . "\n";
     }
 }
 
@@ -53,10 +53,10 @@ for ($i = 0; $i < $length; $i++) {
 
 if ($n != $nCorrect) {
     if ($n < $nCorrect) {
-        $error .= '斷行數量錯誤，輸入的斷行數為'. $n .'，少於' . $nCorrect . '\n';
+        $error .= '斷行數量錯誤，輸入的斷行數為'. $n .'，少於' . $nCorrect . "\n";
     }
     if ($n > $nCorrect) {
-        $error .= '斷行數量錯誤，輸入的斷行數為'. $n .'，大於' . $nCorrect . '\n';
+        $error .= '斷行數量錯誤，輸入的斷行數為'. $n .'，大於' . $nCorrect . "\n";
     }
 }
 
@@ -70,10 +70,10 @@ for ($i = 0; $i < $length; $i++) {
 
 if ($m != $mCorrect) {
     if ($m < $mCorrect) {
-        $error .= '地雷數量錯誤，輸入的地雷數為'. $m .'，少於' . $mCorrect . '\n';
+        $error .= '地雷數量錯誤，輸入的地雷數為'. $m .'，少於' . $mCorrect . "\n";
     }
     if ($m > $mCorrect) {
-        $error .= '地雷數量錯誤，輸入的地雷數為'. $m .'，大於' . $mCorrect . '\n';
+        $error .= '地雷數量錯誤，輸入的地雷數為'. $m .'，大於' . $mCorrect . "\n";
     }
 }
 
@@ -89,7 +89,7 @@ foreach ($checkMap as $key=>$value) {
 if (isset($errorRow)) {
     if ($errorRow < $row) {
         $errorRow = substr($errorRow, 0, (strlen($errorRow) - 1));
-        $error .= '行的長度錯誤，第'. $errorRow .'行的長度不為' . $row . '。';
+        $error .= '行的長度錯誤，第'. $errorRow .'行的長度不為' . $row . "\n";
     }
 
 }
@@ -159,7 +159,7 @@ if (isset($errorM)) {
 
 // 如果上述檢查都通過
 if (isset($error)) {
-    echo '不符合，因為下列原因\n';
+    echo '不符合，因為下列原因' . "\n";
     echo $error;
 } else {
     echo '符合';
